@@ -1,0 +1,1 @@
+First release: Hide YouTube Playables and Map Search, each with its own on/off switch.

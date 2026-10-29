@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PimpMyBrowser popup harness</title>
+  <link rel="stylesheet" href="../app/popup.css">
+</head>
+<body>
+<script>
+  // A fake chrome.* API so the real popup.js runs in a normal tab. Serve the
+  // repo over HTTP and open /tests/popup-harness.html. Add ?update or
+  // ?error to the URL to see the update banner or a background error.
+  const q = new URLSearchParams(location.search);
+  const store = { sync: {}, local: {} };
+  if (q.has("update")) store.local.update = { available: true, latest: "9.9.9", notes: "Example release notes.", url: "https://example.com/PimpMyBrowser.zip" };
+  if (q.has("error")) store.local.errors = [{ code: "PMB-301", details: "Cannot create item with duplicate id pmb-map-search", t: Date.now() }];
+  const area = (name) => ({
+    async get(keys) {
+      const out = {};
+      for (const k of [].concat(keys)) if (k in store[name]) out[k] = structuredClone(store[name][k]);
+      return out;
+    },
+    async set(obj) { Object.assign(store[name], structuredClone(obj)); console.log(`storage.${name}.set`, JSON.stringify(obj)); },
+  });
+  window.chrome = {
+    runtime: {
+      getManifest: () => ({ version: "1.0.0" }),
+      sendMessage: async (msg) => (msg.type === "checkUpdates" ? { ok: true, result: { available: false } } : undefined),
+    },
+    storage: { sync: area("sync"), local: area("local") },
+  };
+  window.__store = store;
+</script>
+<script>
+  fetch("../app/popup.html").then((r) => r.text()).then((html) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    for (const el of doc.body.children) if (el.tagName !== "SCRIPT") document.body.append(document.importNode(el, true));
+    document.querySelector("header img").src = "../icons/icon48.png";
+    import("../app/popup.js");
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PimpMyBrowser</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../icons/icon48.png" alt="" width="28" height="28">
+    <h1>PimpMyBrowser</h1>
+    <button id="open-settings" class="icon" title="Settings" aria-label="Settings">⚙︎</button>
+  </header>
+
+  <div id="update-banner" class="banner" hidden></div>
+  <div id="errors"></div>
+
+  <main id="modules"></main>
+
+  <section id="settings" hidden>
+    <h2>Settings</h2>
+    <label>Update source
+      <input id="update-source" type="text" placeholder="Leave empty for the built-in GitHub feed" spellcheck="false">
+    </label>
+    <div class="row">
+      <button id="save-settings">Save</button>
+      <button id="check-updates">Check for Updates…</button>
+    </div>
+    <p id="update-result" class="muted"></p>
+  </section>
+
+  <footer>
+    <span id="version"></span>
+    <a id="github" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+
+  <template id="module-row">
+    <label class="module">
+      <span class="text">
+        <span class="name"></span>
+        <span class="desc"></span>
+      </span>
+      <span class="switch"><input type="checkbox"><span class="slider"></span></span>
+    </label>
+  </template>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

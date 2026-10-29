@@ -1,0 +1,28 @@
+/* Hide Playables module. Every rule is scoped to html.pmb-hide-playables,
+   which content.js adds or removes to follow the on/off switch. */
+
+/* Home feed "YouTube Playables" shelf */
+html.pmb-hide-playables ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-playables]),
+html.pmb-hide-playables ytd-rich-section-renderer:has(a[href^="/playables"]),
+html.pmb-hide-playables ytd-rich-shelf-renderer[is-playables],
+
+/* Playables shelves on search, channel and watch pages */
+html.pmb-hide-playables ytd-shelf-renderer:has(a[href^="/playables"]),
+html.pmb-hide-playables ytd-reel-shelf-renderer:has(a[href^="/playables"]),
+html.pmb-hide-playables ytd-horizontal-card-list-renderer:has(a[href^="/playables"]),
+
+/* Single game cards that slip into the feed */
+html.pmb-hide-playables ytd-rich-item-renderer:has(a[href^="/playables"]),
+html.pmb-hide-playables ytd-video-renderer:has(a[href^="/playables"]),
+html.pmb-hide-playables yt-lockup-view-model:has(a[href^="/playables"]),
+
+/* "Playables" entry in the sidebar and mini sidebar */
+html.pmb-hide-playables ytd-guide-entry-renderer:has(a[href^="/playables"]),
+html.pmb-hide-playables ytd-mini-guide-entry-renderer:has(a[href^="/playables"]),
+
+/* Mobile site */
+html.pmb-hide-playables ytm-rich-section-renderer:has(a[href^="/playables"]),
+html.pmb-hide-playables ytm-rich-item-renderer:has(a[href^="/playables"]),
+html.pmb-hide-playables ytm-pivot-bar-item-renderer:has(a[href^="/playables"]) {
+  display: none !important;
+}
